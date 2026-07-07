@@ -29,7 +29,6 @@ const IndustryInsightSchema = new Schema<IIndustryInsight>(
       required: true,
       unique: true,
       trim: true,
-      index: true,
     },
     salaryRanges: {
       type: [
