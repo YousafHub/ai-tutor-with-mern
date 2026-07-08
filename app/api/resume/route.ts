@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
             { userId: authUser._id },
             { content },
             { 
-                new: true, 
+                returnDocument: "after", 
                 upsert: true, // Creates if doesn't exist
             }
         );

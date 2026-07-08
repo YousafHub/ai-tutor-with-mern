@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 import { resumeSchema, type ResumeFormValues } from "@/lib/zodSchema";
-import { entriesToMarkdown } from "@/lib/utils";
+import { entriesToMarkdown, parseMarkdownToFormData } from "@/lib/utils";
 import EntryForm from "./entry-form";
 import { showToast } from "@/lib/showToast";
 
@@ -34,9 +34,12 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
     const [isGenerating, setIsGenerating] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
-    const form = useForm<ResumeFormValues>({
-        resolver: zodResolver(resumeSchema),
-        defaultValues: {
+    // ✅ Get default values from initial content or empty
+    const getDefaultValues = () => {
+        if (initialContent) {
+            return parseMarkdownToFormData(initialContent);
+        }
+        return {
             contactInfo: {
                 email: user?.email || "",
                 mobile: "",
@@ -48,21 +51,32 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
             experience: [],
             education: [],
             projects: [],
-        },
+        };
+    };
+
+    const form = useForm<ResumeFormValues>({
+        resolver: zodResolver(resumeSchema),
+        defaultValues: getDefaultValues(),
     });
 
     const formValues = form.watch();
 
-    useEffect(() => {
-        if (initialContent) setActiveTab("preview");
-    }, [initialContent]);
-
+    // ✅ Update preview when form changes
     useEffect(() => {
         if (activeTab === "edit") {
             const newContent = getCombinedContent();
             setPreviewContent(newContent || initialContent || "");
         }
     }, [formValues, activeTab, initialContent]);
+
+    // ✅ If initial content changes, reset form with parsed data
+    useEffect(() => {
+        if (initialContent) {
+            const parsedData = parseMarkdownToFormData(initialContent);
+            form.reset(parsedData);
+            setActiveTab("preview");
+        }
+    }, [initialContent, form]);
 
     const getContactMarkdown = (): string => {
         const { contactInfo } = formValues;
@@ -92,10 +106,10 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
             .join("\n\n");
     };
 
-    // ✅ Save handler with simple fetch
+    // ✅ Save handler
     const handleSave = async () => {
         const content = getCombinedContent();
-        
+
         if (!content) {
             showToast("error", "Please add some content to your resume");
             return;
@@ -368,24 +382,26 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
 
                 {/* Preview Tab */}
                 <TabsContent value="preview">
-                    <Button
-                        variant="link"
-                        type="button"
-                        className="mb-2"
-                        onClick={() => setResumeMode(!resumeMode)}
-                    >
-                        {resumeMode ? (
-                            <>
-                                <Edit className="h-4 w-4" />
-                                Edit Resume
-                            </>
-                        ) : (
-                            <>
-                                <Monitor className="h-4 w-4" />
-                                Show Preview
-                            </>
-                        )}
-                    </Button>
+                    <div className="flex justify-between items-center mb-4">
+                        <Button
+                            variant="link"
+                            type="button"
+                            className="mb-2"
+                            onClick={() => setResumeMode(!resumeMode)}
+                        >
+                            {resumeMode ? (
+                                <>
+                                    <Edit className="h-4 w-4" />
+                                    Edit Resume
+                                </>
+                            ) : (
+                                <>
+                                    <Monitor className="h-4 w-4" />
+                                    Show Preview
+                                </>
+                            )}
+                        </Button>
+                    </div>
 
                     {resumeMode && previewContent === "" && (
                         <div className="flex p-3 gap-2 items-center border-2 border-yellow-600 text-yellow-600 rounded mb-2">
@@ -396,7 +412,7 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
                         </div>
                     )}
 
-                    <div className="border rounded-lg">
+                    <div className="border rounded-lg overflow-hidden">
                         {resumeMode ? (
                             <div className="wmde-markdown-var" data-color-mode="light">
                                 <MarkdownEditor.Markdown
