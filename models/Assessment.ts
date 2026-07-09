@@ -1,9 +1,16 @@
+// models/Assessment.model.ts
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IAssessment extends Document {
   userId: string;
   quizScore: number;
-  questions: any[];
+  questions: Array<{
+    question: string;
+    answer: string;
+    userAnswer: string;
+    isCorrect: boolean;
+    explanation: string;
+  }>;
   category: string;
   improvementTip?: string;
   createdAt: Date;
@@ -24,7 +31,15 @@ const AssessmentSchema = new Schema<IAssessment>(
       min: 0,
     },
     questions: {
-      type: [Schema.Types.Mixed] as any, // Type assertion
+      type: [
+        {
+          question: { type: String, required: true },
+          answer: { type: String, required: true },
+          userAnswer: { type: String, required: true },
+          isCorrect: { type: Boolean, required: true },
+          explanation: { type: String, required: true },
+        },
+      ],
       required: true,
       default: [],
     },
