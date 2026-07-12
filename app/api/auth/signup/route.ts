@@ -39,6 +39,7 @@ export async function POST(request: Request) {
             _id: newUser._id.toString(),
             email: newUser.email,
             name: newUser.name,
+            isOnboarded: false,
         })
             .setIssuedAt()
             .setExpirationTime('7d')

@@ -6,7 +6,7 @@ export interface AuthUser {
     _id: string;
     email: string;
     name: string;
-    role?: string;
+    isOnboarded: boolean
 }
 
 export async function getAuthUser(): Promise<AuthUser | null> {
@@ -23,7 +23,7 @@ export async function getAuthUser(): Promise<AuthUser | null> {
             _id: payload._id as string,
             email: payload.email as string,
             name: payload.name as string,
-            role: payload.role as string,
+            isOnboarded: payload.isOnboarded as boolean
         };
     } catch (error) {
         return null;

@@ -23,6 +23,9 @@ export async function POST(request: Request) {
             return response(false, 400, 'Invalid Login credentials');
         }
 
+        const isOnboarded = user.isOnboarded || false;
+
+
         // Verify password
         const isPasswordVerified = await user.comparePassword(password);
         if (!isPasswordVerified) {
@@ -34,6 +37,7 @@ export async function POST(request: Request) {
             _id: user._id.toString(),
             name: user.name,
             email: user.email,
+            isOnboarded,
         };
 
         const secret = new TextEncoder().encode(process.env.SECRET_KEY);

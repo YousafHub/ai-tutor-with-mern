@@ -1,7 +1,5 @@
-// lib/zodSchema.ts
 import { z } from 'zod';
 
-// ============ AUTH SCHEMAS ============
 export const signupSchema = z.object({
   name: z.string()
     .min(2, 'Name must be at least 2 characters')
@@ -24,7 +22,6 @@ export const loginSchema = z.object({
     .min(6, 'Password is required'),
 });
 
-// ============ ONBOARDING SCHEMA ============
 export const onboardingSchema = z.object({
   industry: z.string()
     .min(1, "Please select an industry"),
@@ -50,9 +47,7 @@ export interface OnboardingApiData {
   bio?: string;
 }
 
-// ============ RESUME SCHEMAS ============
 
-// Contact Information Schema
 export const contactSchema = z.object({
   email: z.string().email("Invalid email address"),
   mobile: z.string().min(1, "Mobile number is required"),
@@ -60,8 +55,6 @@ export const contactSchema = z.object({
   twitter: z.string().url("Invalid Twitter URL").optional(),
 });
 
-// ✅ FIXED: entrySchema with current as required
-// lib/zodSchema.ts
 export const entrySchema = z.object({
   title: z.string().min(1, "Title is required"),
   organization: z.string().min(1, "Organization is required"),
@@ -79,7 +72,6 @@ export const entrySchema = z.object({
   }
 });
 
-// Resume Schema
 export const resumeSchema = z.object({
   contactInfo: contactSchema,
   summary: z.string().min(1, "Professional summary is required"),
@@ -89,10 +81,16 @@ export const resumeSchema = z.object({
   projects: z.array(entrySchema),
 });
 
-// ============ TYPES ============
+export const coverLetterSchema = z.object({
+  companyName: z.string().min(1, "Company name is required"),
+  jobTitle: z.string().min(1, "Job title is required"),
+  jobDescription: z.string().min(1, "Job description is required"),
+});
+
 export type ContactFormValues = z.infer<typeof contactSchema>;
 export type EntryFormValues = z.infer<typeof entrySchema>;
 export type ResumeFormValues = z.infer<typeof resumeSchema>;
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type OnboardingInput = z.infer<typeof onboardingSchema>;
+export type CoverLetterInput = z.infer<typeof coverLetterSchema>;
