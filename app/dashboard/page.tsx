@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 "use client";
 
 import { useFetch } from "@/hooks/useFetch";
@@ -33,7 +32,7 @@ const IndustryInsightsPage = () => {
                 <p className="text-red-500">{error}</p>
                 <button
                     onClick={() => handleNavigation("/")}
-                    className="mt-4 px-4 py-2 bg-primary text-white rounded cursor-pointer"
+                    className="mt-4 px-4 py-2 bg-black text-white rounded cursor-pointer"
                 >
                     Go Home
                 </button>

@@ -1,4 +1,3 @@
-// components/logout-button.tsx
 "use client";
 
 import { useRouter } from "next/navigation";

@@ -82,7 +82,5 @@ const IndustryInsightSchema = new Schema<IIndustryInsight>(
   }
 );
 
-// Index for industry queries
-IndustryInsightSchema.index({ industry: 1 });
 
 export const IndustryInsight: Model<IIndustryInsight> = mongoose.models.IndustryInsight || mongoose.model<IIndustryInsight>('IndustryInsight', IndustryInsightSchema);

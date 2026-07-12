@@ -3,8 +3,7 @@
 import { Button } from "./ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { useRef, useEffect, type RefObject } from "react";
-// import { navigateBasedOnOnboarding } from "@/actions/navigation";
+import { useRef, useEffect } from "react";
 
 export default function HeroSection() {
   const imageRef = useRef<HTMLDivElement>(null);
@@ -12,7 +11,7 @@ export default function HeroSection() {
   useEffect(() => {
     const imageElement = imageRef.current;
 
-    if (!imageElement) return; // Guard clause for null
+    if (!imageElement) return; 
 
     const handleScroll = (): void => {
       const scrollPosition = window.scrollY;
@@ -45,11 +44,11 @@ export default function HeroSection() {
         </div>
 
         <div className="flex justify-center space-x-4">
-          {/* <form action={navigateBasedOnOnboarding}> */}
+          <Link href="/dashboard">
             <Button size="lg" className="px-8 !py-5 cursor-pointer">
               Get Started
             </Button>
-          {/* </form> */}
+          </Link>
           <Link href="https://www.instagram.com/yousafhub/" target="_blank">
             <Button size="lg" variant="outline" className="px-8 !py-5">
               Contact Me

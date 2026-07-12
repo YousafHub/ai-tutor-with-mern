@@ -1,4 +1,3 @@
-// lib/utils.ts
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -29,7 +28,6 @@ interface ParsedResume {
   projects: Entry[];
 }
 
-// lib/utils.ts - entriesToMarkdown
 export function entriesToMarkdown(entries: Entry[], type: string): string {
   if (!entries?.length) return "";
 
@@ -46,7 +44,6 @@ export function entriesToMarkdown(entries: Entry[], type: string): string {
   );
 }
 
-// lib/utils.ts - Complete parseMarkdownToFormData
 
 export function parseMarkdownToFormData(markdown: string): ParsedResume {
   if (!markdown) {

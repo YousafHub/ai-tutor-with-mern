@@ -1,4 +1,3 @@
-// app/ai-cover-letter/_components/cover-letter-preview.tsx
 "use client";
 
 import MarkdownEditor from '@uiw/react-markdown-editor';

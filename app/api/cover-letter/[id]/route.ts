@@ -1,14 +1,10 @@
-// app/api/cover-letter/[id]/route.ts
-import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/databaseConnection";
 import { getAuthUser } from "@/lib/auth";
 import { response, catchError } from "@/lib/helperfunction";
 import { CoverLetter } from "@/models/CoverLetter";
 
-// GET - Fetch a single cover letter by ID
 export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> } // ✅ params is a Promise
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -18,7 +14,6 @@ export async function GET(
       return response(false, 401, "Unauthorized");
     }
 
-    // ✅ Await params to get the id
     const { id } = await params;
 
     const coverLetter = await CoverLetter.findOne({
@@ -36,10 +31,8 @@ export async function GET(
   }
 }
 
-// DELETE - Delete a cover letter by ID
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> } // ✅ params is a Promise
+  { params }: { params: Promise<{ id: string }> } 
 ) {
   try {
     await connectDB();
@@ -49,7 +42,6 @@ export async function DELETE(
       return response(false, 401, "Unauthorized");
     }
 
-    // ✅ Await params to get the id
     const { id } = await params;
 
     const coverLetter = await CoverLetter.findOneAndDelete({

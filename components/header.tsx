@@ -1,4 +1,3 @@
-// components/header.tsx
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronDown, FileText, GraduationCap, LayoutDashboard, PenBox, StarsIcon } from "lucide-react";
@@ -8,7 +7,6 @@ import { getAuthUser } from "@/lib/auth";
 import LogoutButton from "./logout-button";
 
 export default async function Header() {
-  // ✅ Server-side - no useState/useEffect needed
   const user = await getAuthUser();
 
   return (
@@ -84,10 +82,10 @@ export default async function Header() {
           ) : (
             <>
               <Link href="/login">
-                <Button variant="outline" className="cursor-pointer">Sign In</Button>
+                <Button className="cursor-pointer">Sign In</Button>
               </Link>
-              <Link href="/signup">
-                <Button className="cursor-pointer">Sign Up</Button>
+              <Link href="/signup" className="sm:block hidden ">
+                <Button variant="outline" className="cursor-pointer">Sign Up</Button>
               </Link>
             </>
           )}

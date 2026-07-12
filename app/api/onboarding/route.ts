@@ -1,4 +1,3 @@
-// app/api/user/onboarding/route.ts
 import { getAuthUser } from "@/lib/auth";
 import { connectDB } from "@/lib/databaseConnection";
 import { catchError, response } from "@/lib/helperfunction";
@@ -11,7 +10,6 @@ export async function POST(request: NextRequest) {
     try {
         await connectDB();
 
-        // Get authenticated user
         const authUser = await getAuthUser();
         if (!authUser) {
             return response(false, 401, "Unauthorized");
@@ -20,12 +18,10 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { industry, subIndustry, experience, skills, bio } = body;
 
-        // Validate required fields
         if (!industry || !subIndustry) {
             return response(false, 400, "Industry and Specialization are required");
         }
 
-        // Update user using authUser._id
         const updatedUser = await UserModel.findByIdAndUpdate(
             authUser._id,
             {
@@ -43,20 +39,18 @@ export async function POST(request: NextRequest) {
             return response(false, 404, "User not found");
         }
 
-        // ✅ After updating user, generate new token with isOnboarded = true
         const secret = new TextEncoder().encode(process.env.SECRET_KEY);
         const newToken = await new SignJWT({
             _id: updatedUser._id.toString(),
             email: updatedUser.email,
             name: updatedUser.name,
-            isOnboarded: true, // ✅ Now onboarded!
+            isOnboarded: true, 
         })
             .setIssuedAt()
             .setExpirationTime('7d')
             .setProtectedHeader({ alg: 'HS256' })
             .sign(secret);
 
-        // ✅ Update the cookie with new token
         const cookieStore = await cookies();
         cookieStore.set({
             name: 'access_token',
@@ -68,7 +62,6 @@ export async function POST(request: NextRequest) {
             maxAge: 60 * 60 * 24 * 7,
         });
 
-        // ✅ RETURN response here
         return response(true, 200, "Profile updated successfully");
 
     } catch (error) {

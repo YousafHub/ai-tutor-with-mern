@@ -1,4 +1,3 @@
-// app/ai-cover-letter/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -46,7 +45,7 @@ export default function CoverLetterPage() {
         <p className="text-red-500">{error}</p>
         <button
           onClick={() => handleNavigation("/")}
-          className="mt-4 px-4 py-2 bg-primary text-white rounded cursor-pointer"
+          className="mt-4 px-4 py-2 bg-black text-white rounded cursor-pointer"
         >
           Go Home
         </button>
@@ -62,7 +61,7 @@ export default function CoverLetterPage() {
         <h1 className="text-4xl md:text-6xl font-bold gradient gradient-title">
           My Cover Letters
         </h1>
-        <Link href="/ai-cover-letter/new">
+        <Link href="/ai-cover-letter/new" className="flex items-center ml-auto">
           <Button className="cursor-pointer py-4.5 px-3">
             <Plus className="h-4 w-4 mr-2" />
             Create New
@@ -70,7 +69,6 @@ export default function CoverLetterPage() {
         </Link>
       </div>
 
-      {/* ✅ Simple usage - no onDelete prop needed */}
       <CoverLetterList coverLetters={coverLetters} />
     </div>
   );

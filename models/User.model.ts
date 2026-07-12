@@ -6,12 +6,12 @@ export interface IUser extends Document {
     name?: string;
     imageUrl?: string;
     industry?: string;
-    subIndustry?: string; // ✅ Add this
+    subIndustry?: string,
     bio?: string;
     experience?: number;
     skills: string[];
-    isOnboarded?: boolean; // ✅ Add this
-    password?: string; // For custom auth
+    isOnboarded?: boolean; 
+    password?: string;
     createdAt: Date;
     updatedAt: Date;
     comparePassword(candidatePassword: string): Promise<boolean>;

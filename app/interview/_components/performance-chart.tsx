@@ -1,4 +1,3 @@
-// app/interview/_components/performance-chart.tsx
 "use client";
 
 import {

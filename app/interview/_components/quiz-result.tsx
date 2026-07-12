@@ -1,4 +1,3 @@
-// app/interview/_components/quiz-result.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -6,16 +5,14 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Trophy, XCircle } from "lucide-react";
 
-// ✅ Updated Question interface for results
 interface ResultQuestion {
   question: string;
-  answer: string;          // This is the correct answer
+  answer: string;          
   userAnswer: string;
   isCorrect: boolean;
   explanation: string;
 }
 
-// ✅ Updated Assessment interface for results
 interface AssessmentResult {
   id: string;
   userId: string;

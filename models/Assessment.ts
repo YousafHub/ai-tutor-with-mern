@@ -1,4 +1,3 @@
-// models/Assessment.model.ts
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IAssessment extends Document {
@@ -58,8 +57,6 @@ const AssessmentSchema = new Schema<IAssessment>(
   }
 );
 
-// Compound index for user + category queries
-AssessmentSchema.index({ userId: 1, category: 1 });
 
 export const Assessment: Model<IAssessment> =
   mongoose.models.Assessment ||

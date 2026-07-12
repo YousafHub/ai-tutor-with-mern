@@ -1,4 +1,3 @@
-// app/api/industry/insights/route.ts
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/databaseConnection";
 import { getAuthUser } from "@/lib/auth";
@@ -82,8 +81,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // ✅ TypeScript now knows insight exists here
-    // If insight is null, return an error
     if (!insight) {
       return response(false, 500, "Failed to fetch or create industry insights");
     }

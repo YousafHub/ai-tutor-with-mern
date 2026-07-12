@@ -1,4 +1,3 @@
-// app/interview/_components/stats-cards.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Brain, Trophy } from "lucide-react";
 

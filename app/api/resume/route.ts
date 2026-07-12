@@ -1,11 +1,9 @@
-// app/api/resume/route.ts
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/databaseConnection";
 import { getAuthUser } from "@/lib/auth";
 import { response, catchError } from "@/lib/helperfunction";
 import { Resume } from "@/models/Resume";
 
-// GET - Fetch user's resume
 export async function GET(request: NextRequest) {
     try {
         await connectDB();
@@ -26,7 +24,6 @@ export async function GET(request: NextRequest) {
     }
 }
 
-// POST - Save/Update resume
 export async function POST(request: NextRequest) {
     try {
         await connectDB();
@@ -48,7 +45,7 @@ export async function POST(request: NextRequest) {
             { content },
             { 
                 returnDocument: "after", 
-                upsert: true, // Creates if doesn't exist
+                upsert: true, 
             }
         );
 

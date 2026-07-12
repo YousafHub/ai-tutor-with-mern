@@ -8,7 +8,6 @@ import Image from "next/image";
 import { faqs, type FAQ } from "@/data/faq";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { ArrowRight } from "lucide-react";
-// import { navigateBasedOnOnboarding } from "@/actions/navigation";
 
 export default function Home() {
   return (
@@ -166,7 +165,6 @@ export default function Home() {
               Join thousands of professionals who are advancing their careers
               using AI-powered guidance.
             </p>
-            {/* <form action={navigateBasedOnOnboarding}> */}
             <Button
               size="lg"
               variant="secondary"
@@ -175,7 +173,6 @@ export default function Home() {
               Start your journey today{" "}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            {/* </form> */}
           </div>
         </div>
       </section>

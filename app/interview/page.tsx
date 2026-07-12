@@ -1,4 +1,3 @@
-// app/interview/page.tsx
 "use client";
 
 import { useFetch } from "@/hooks/useFetch";
@@ -30,13 +29,6 @@ export default function InterviewPage() {
     router.push(path);
   };
 
-  // ✅ Log the data when it arrives
-  useEffect(() => {
-    if (data) {
-      console.log("📦 Full API Response:", data);
-    }
-  }, [data]);
-
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -51,7 +43,7 @@ export default function InterviewPage() {
         <p className="text-red-500">{error}</p>
         <button
           onClick={() => handleNavigation("/")}
-          className="mt-4 px-4 py-2 bg-primary text-white rounded cursor-pointer"
+          className="mt-4 px-4 py-2 bg-black text-white rounded cursor-pointer"
         >
           Go Home
         </button>
@@ -59,10 +51,8 @@ export default function InterviewPage() {
     );
   }
 
-  // ✅ Fix: data is the array directly, not wrapped in .data
   const assessments = Array.isArray(data) ? data : [];
 
-  console.log("✅ Final assessments being passed:", assessments);
 
   return (
     <div className="container mx-auto p-6">

@@ -1,4 +1,3 @@
-// app/ai-cover-letter/_components/cover-letter-list.tsx
 "use client";
 
 import { useState } from "react";
@@ -63,8 +62,7 @@ export default function CoverLetterList({ coverLetters }: CoverLetterListProps) 
 
       showToast('success', 'Cover letter deleted successfully!');
       
-      // ✅ Refresh the page to update the list
-      router.refresh();
+      window.location.reload()
       
     } catch (error: any) {
       showToast('error', error.message || 'Failed to delete cover letter');

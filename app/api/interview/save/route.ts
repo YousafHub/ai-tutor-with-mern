@@ -1,4 +1,3 @@
-// app/api/interview/save/route.ts
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/databaseConnection";
 import { getAuthUser } from "@/lib/auth";
@@ -37,13 +36,12 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { questions, answers, score, category } = body; // ✅ Get category from request
+    const { questions, answers, score, category } = body;
 
     if (!questions || !answers || score === undefined) {
       return response(false, 400, "Questions, answers, and score are required");
     }
 
-    // Format question results with proper types
     const questionResults: QuestionResult[] = questions.map((q: Question, index: number) => ({
       question: q.question,
       answer: q.correctAnswer,
@@ -52,7 +50,6 @@ export async function POST(request: NextRequest) {
       explanation: q.explanation,
     }));
 
-    // Generate improvement tip for wrong answers
     const wrongAnswers = questionResults.filter((q: QuestionResult) => !q.isCorrect);
     let improvementTip: string | undefined = undefined;
 
@@ -67,10 +64,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ✅ Use dynamic category from request, fallback to "Technical"
     const assessmentCategory = category || "Technical";
 
-    // Create assessment
     const assessment = await Assessment.create({
       userId: user._id.toString(),
       quizScore: score,

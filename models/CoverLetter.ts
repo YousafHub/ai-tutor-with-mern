@@ -47,7 +47,4 @@ const CoverLetterSchema = new Schema<ICoverLetter>(
   }
 );
 
-// Compound index for user + status queries
-CoverLetterSchema.index({ userId: 1, status: 1 });
-
 export const CoverLetter: Model<ICoverLetter> = mongoose.models.CoverLetter || mongoose.model<ICoverLetter>('CoverLetter', CoverLetterSchema);

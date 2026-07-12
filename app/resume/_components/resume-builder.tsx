@@ -1,4 +1,3 @@
-// app/resume/_components/resume-builder.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -34,7 +33,6 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
     const [isGenerating, setIsGenerating] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
-    // ✅ Get default values from initial content or empty
     const getDefaultValues = () => {
         if (initialContent) {
             return parseMarkdownToFormData(initialContent);
@@ -61,7 +59,6 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
 
     const formValues = form.watch();
 
-    // ✅ Update preview when form changes
     useEffect(() => {
         if (activeTab === "edit") {
             const newContent = getCombinedContent();
@@ -69,7 +66,6 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
         }
     }, [formValues, activeTab, initialContent]);
 
-    // ✅ If initial content changes, reset form with parsed data
     useEffect(() => {
         if (initialContent) {
             const parsedData = parseMarkdownToFormData(initialContent);
@@ -106,7 +102,6 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
             .join("\n\n");
     };
 
-    // ✅ Save handler
     const handleSave = async () => {
         const content = getCombinedContent();
 
@@ -156,7 +151,6 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
 
             await html2pdf().set(opt).from(element).save();
         } catch (error) {
-            console.error("PDF generation error:", error);
             showToast("error", "Failed to generate PDF");
         } finally {
             setIsGenerating(false);
@@ -169,7 +163,7 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
             <div className="flex flex-col md:flex-row justify-between items-center gap-2">
                 <h1 className="font-bold gradient gradient-title text-5xl md:text-6xl">Resume Builder</h1>
 
-                <div className="space-x-2">
+                <div className="flex items-center gap-2 ml-auto">
                     <Button variant="destructive" onClick={handleSave} disabled={isSaving}>
                         {isSaving ? (
                             <>

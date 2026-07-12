@@ -77,26 +77,26 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
   const watchIndustry = form.watch("industry");
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-2xl border-border/50 shadow-xl">
-        <CardHeader className="space-y-2 pb-4 px-6 md:px-8 pt-6 md:pt-8">
-          <CardTitle className="gradient gradient-title text-3xl md:text-4xl lg:text-5xl">
+    <div className="flex items-center justify-center min-h-screen bg-background px-2 pt-24 pb-16">
+      <Card className="w-full max-w-lg border-border/50 shadow-lg">
+        <CardHeader className="space-y-2 pb-2">
+          <CardTitle className="text-2xl md:text-3xl font-bold gradient gradient-title">
             Complete your Profile
           </CardTitle>
-          <CardDescription className="text-base text-muted-foreground">
+          <CardDescription className="text-sm text-muted-foreground">
             Select your industry to get personalized career insights and recommendations.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6 px-6 md:px-8 pb-6 md:pb-8">
+        <CardContent className="space-y-5">
           <Form {...form}>
-            <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+            <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
               {/* Industry */}
               <FormField
                 control={form.control}
                 name="industry"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Industry</FormLabel>
+                    <FormLabel className="text-sm font-medium">Industry</FormLabel>
                     <Select
                       value={field.value} 
                       onValueChange={(value) => {
@@ -108,7 +108,7 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
                       }}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full h-11 bg-muted/50 cursor-pointer">
+                        <SelectTrigger className="w-full h-10 bg-muted/50 cursor-pointer">
                           <SelectValue placeholder="Select an industry" />
                         </SelectTrigger>
                       </FormControl>
@@ -132,13 +132,13 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
                   name="subIndustry"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Specialization</FormLabel>
+                      <FormLabel className="text-sm font-medium">Specialization</FormLabel>
                       <Select
                         value={field.value}
                         onValueChange={field.onChange}
                       >
                         <FormControl>
-                          <SelectTrigger className="w-full h-11 bg-muted/50 cursor-pointer">
+                          <SelectTrigger className="w-full h-10 bg-muted/50 cursor-pointer">
                             <SelectValue placeholder="Select your specialization" />
                           </SelectTrigger>
                         </FormControl>
@@ -162,14 +162,14 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
                 name="experience"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Years of Experience</FormLabel>
+                    <FormLabel className="text-sm font-medium">Years of Experience</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         min="0"
                         max="50"
                         placeholder="Enter years of experience"
-                        className="h-11 bg-muted/50"
+                        className="h-10 bg-muted/50"
                         {...field}
                       />
                     </FormControl>
@@ -184,15 +184,15 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
                 name="skills"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Skills</FormLabel>
+                    <FormLabel className="text-sm font-medium">Skills</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="e.g., Python, JavaScript, Project Management"
-                        className="h-11 bg-muted/50"
+                        className="h-10 bg-muted/50"
                         {...field}
                       />
                     </FormControl>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs text-muted-foreground mt-1">
                       Separate multiple skills with commas
                     </p>
                     <FormMessage />
@@ -206,11 +206,11 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Professional Bio</FormLabel>
+                    <FormLabel className="text-sm font-medium">Professional Bio</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Tell us about your professional background"
-                        className="min-h-[120px] bg-muted/50 resize-none"
+                        className="min-h-[100px] bg-muted/50 resize-none"
                         {...field}
                       />
                     </FormControl>
@@ -222,7 +222,7 @@ export default function OnboardingForm({ industries }: OnboardingFormProps) {
               {/* Submit */}
               <Button
                 type="submit"
-                className="w-full h-11 cursor-pointer bg-gradient-to-r from-gray-600 to-gray-800 hover:from-gray-700 hover:to-gray-900 dark:from-gray-500 dark:to-gray-700 dark:hover:from-gray-600 dark:hover:to-gray-800"
+                className="w-full h-10 cursor-pointer bg-gradient-to-r from-gray-600 to-gray-800 hover:from-gray-700 hover:to-gray-900 dark:from-gray-500 dark:to-gray-700 dark:hover:from-gray-600 dark:hover:to-gray-800 text-sm"
                 disabled={loading}
               >
                 {loading ? (

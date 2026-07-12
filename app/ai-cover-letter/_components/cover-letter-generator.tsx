@@ -1,4 +1,3 @@
-// app/ai-cover-letter/_components/cover-letter-generator.tsx
 "use client";
 
 import { useForm } from "react-hook-form";

@@ -1,4 +1,3 @@
-// app/api/auth/signup/route.ts
 import { cookies } from "next/headers";
 import { SignJWT } from "jose";
 import { connectDB } from "@/lib/databaseConnection";
@@ -20,20 +19,17 @@ export async function POST(request: Request) {
 
         const { name, email, password } = validatedData.data;
 
-        // Check if user already exists
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             return response(false, 409, 'User already registered');
         }
 
-        // Create new user
         const newUser = await UserModel.create({
             name,
             email,
             password,
         });
 
-        // Generate JWT token
         const secret = new TextEncoder().encode(process.env.SECRET_KEY);
         const token = await new SignJWT({
             _id: newUser._id.toString(),
@@ -46,7 +42,6 @@ export async function POST(request: Request) {
             .setProtectedHeader({ alg: 'HS256' })
             .sign(secret);
 
-        // Set cookie
         const cookieStore = await cookies();
         cookieStore.set({
             name: 'access_token',

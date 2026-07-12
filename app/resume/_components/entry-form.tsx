@@ -1,4 +1,3 @@
-// components/resume/entry-form.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -74,7 +73,6 @@ export default function EntryForm({ type, entries, onChange }: EntryFormProps) {
     onChange(newEntries);
   };
 
-  // ✅ AI Improvement handler with fetch
   const handleImproveDescription = async () => {
     const currentDescription = form.getValues("description");
     if (!currentDescription) {
@@ -102,7 +100,6 @@ export default function EntryForm({ type, entries, onChange }: EntryFormProps) {
         throw new Error(result.message || "Failed to improve description");
       }
 
-      // ✅ Set the improved description back to the form
       form.setValue("description", result.data);
       showToast("success", "Description improved successfully!");
     } catch (error: any) {
@@ -114,7 +111,6 @@ export default function EntryForm({ type, entries, onChange }: EntryFormProps) {
 
   return (
     <div className="space-y-4">
-      {/* Existing Entries */}
       <div className="space-y-4">
         {entries.map((item, index) => (
           <Card key={index}>
@@ -256,7 +252,6 @@ export default function EntryForm({ type, entries, onChange }: EntryFormProps) {
                   )}
                 />
 
-                {/* ✅ AI Improve Button with loading state */}
                 <Button
                   type="button"
                   className="cursor-pointer w-fit"

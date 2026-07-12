@@ -1,4 +1,3 @@
-// app/ai-cover-letter/[id]/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -29,7 +28,6 @@ export default function EditCoverLetterPage({
   const { id } = use(params);
 
 
-  // ✅ Use useFetch hook (no async/await at component level)
   const { data, loading, error } = useFetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/cover-letter/${id}`,
     {

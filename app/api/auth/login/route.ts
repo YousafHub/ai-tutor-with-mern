@@ -17,7 +17,6 @@ export async function POST(request: Request) {
 
         const { email, password } = validatedData.data;
 
-        // Get user from database with password field
         const user = await UserModel.findOne({ email }).select('+password');
         if (!user) {
             return response(false, 400, 'Invalid Login credentials');
@@ -26,13 +25,11 @@ export async function POST(request: Request) {
         const isOnboarded = user.isOnboarded || false;
 
 
-        // Verify password
         const isPasswordVerified = await user.comparePassword(password);
         if (!isPasswordVerified) {
             return response(false, 400, 'Invalid Login credentials');
         }
 
-        // Generate JWT token
         const loggedInUserData = {
             _id: user._id.toString(),
             name: user.name,
@@ -43,11 +40,10 @@ export async function POST(request: Request) {
         const secret = new TextEncoder().encode(process.env.SECRET_KEY);
         const token = await new SignJWT(loggedInUserData)
             .setIssuedAt()
-            .setExpirationTime('7d') // Longer expiration for better UX
+            .setExpirationTime('7d')
             .setProtectedHeader({ alg: 'HS256' })
             .sign(secret);
 
-        // Set cookie
         const cookieStore = await cookies();
         cookieStore.set({
             name: 'access_token',
@@ -56,7 +52,7 @@ export async function POST(request: Request) {
             path: '/',
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            maxAge: 60 * 60 * 24 * 7, // 7 days
+            maxAge: 60 * 60 * 24 * 7,
         });
 
         return response(true, 200, 'You are logged in');

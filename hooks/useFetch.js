@@ -1,4 +1,3 @@
-// hooks/useFetch.js
 import { useState, useEffect } from "react";
 
 export function useFetch(url, options = {}) {
@@ -51,7 +50,7 @@ export function useFetch(url, options = {}) {
         return () => {
             isMounted = false;
         };
-    }, []); // ✅ Empty deps = runs once on mount
+    }, []); 
 
     return { data, loading, error };
 }

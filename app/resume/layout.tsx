@@ -1,4 +1,3 @@
-// app/resume/layout.tsx
 import { ReactNode } from "react";
 
 interface LayoutProps {
@@ -7,7 +6,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="px-5 pt-20">
+    <div className="px-3 pt-20">
       {children}
     </div>
   );

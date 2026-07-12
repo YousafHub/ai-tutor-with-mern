@@ -1,4 +1,3 @@
-// app/api/interview/generate/route.ts
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/databaseConnection";
 import { getAuthUser } from "@/lib/auth";

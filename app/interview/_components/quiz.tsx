@@ -1,4 +1,3 @@
-// app/interview/_components/quiz.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -40,7 +39,7 @@ interface QuizProps {
 
 export default function Quiz({ onStartNew }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const [answers, setAnswers] = useState<(string | null)[]>([]);
+  const [answers, setAnswers] = useState<(string)[]>([]);
   const [showExplanation, setShowExplanation] = useState<boolean>(false);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,12 +47,10 @@ export default function Quiz({ onStartNew }: QuizProps) {
   const [quizData, setQuizData] = useState<Question[] | null>(null);
   const [resultData, setResultData] = useState<AssessmentResult | null>(null);
 
-  // ✅ Generate quiz on mount
   useEffect(() => {
     generateQuiz();
   }, []);
 
-  // ✅ Generate quiz
   const generateQuiz = async () => {
     try {
       setLoading(true);
@@ -69,7 +66,7 @@ export default function Quiz({ onStartNew }: QuizProps) {
       }
 
       setQuizData(result.data);
-      setAnswers(new Array(result.data.length).fill(null));
+      setAnswers(new Array(result.data.length).fill(""));
       setShowResult(false);
       setCurrentQuestion(0);
     } catch (error: any) {
@@ -105,7 +102,6 @@ export default function Quiz({ onStartNew }: QuizProps) {
     return (correct / quizData.length) * 100;
   };
 
-  // ✅ Save quiz result
   const finishQuiz = async () => {
     if (!quizData) return;
     
@@ -150,7 +146,6 @@ export default function Quiz({ onStartNew }: QuizProps) {
     if (onStartNew) onStartNew();
   };
 
-  // ✅ Loading state
   if (loading) {
     return (
       <Card className="mx-2">
@@ -162,7 +157,6 @@ export default function Quiz({ onStartNew }: QuizProps) {
     );
   }
 
-  // ✅ Show result
   if (showResult && resultData) {
     return (
       <div className="mx-2">
@@ -171,7 +165,6 @@ export default function Quiz({ onStartNew }: QuizProps) {
     );
   }
 
-  // ✅ Show start screen
   if (!quizData) {
     return (
       <Card className="mx-2">
@@ -207,7 +200,7 @@ export default function Quiz({ onStartNew }: QuizProps) {
         <RadioGroup
           className="space-y-2"
           onValueChange={handleAnswer}
-          value={answers[currentQuestion] || undefined}
+          value={answers[currentQuestion] || ""}
         >
           {question.options.map((option: string, index: number) => (
             <div className="flex items-center space-x-2" key={index}>

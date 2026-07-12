@@ -1,17 +1,13 @@
-// lib/gemini.service.ts
-import { GoogleGenerativeAI, GenerativeModel } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 
-// ✅ List of models in order of preference
 const MODEL_NAMES = [
   "gemini-3.5-flash",
   "gemini-3.5-pro",
   "gemini-2.5-flash",
 ];
 
-// Type for AI Insights
 export interface AIInsights {
   salaryRanges: Array<{
     role: string;
@@ -28,22 +24,16 @@ export interface AIInsights {
   recommendedSkills: string[];
 }
 
-/**
- * Try multiple models until one works
- */
 async function generateWithFallback(prompt: string): Promise<string> {
   let lastError: Error | null = null;
 
   for (const modelName of MODEL_NAMES) {
     try {
-      console.log(`🔄 Trying model: ${modelName}`);
       const model = genAI.getGenerativeModel({ model: modelName });
       const result = await model.generateContent(prompt);
       const response = result.response;
-      console.log(`✅ Model ${modelName} succeeded!`);
       return response.text();
     } catch (error: any) {
-      console.warn(`❌ Model ${modelName} failed:`, error.message);
       lastError = error;
     }
   }
@@ -51,9 +41,6 @@ async function generateWithFallback(prompt: string): Promise<string> {
   throw new Error(`All models failed. Last error: ${lastError?.message}`);
 }
 
-/**
- * Generate AI insights for a specific industry
- */
 export const generateAIInsights = async (industry: string): Promise<AIInsights> => {
   const prompt = `
     Analyze the current state of the ${industry} industry and provide insights in ONLY the following JSON format without any additional notes or explanations:
@@ -80,9 +67,6 @@ export const generateAIInsights = async (industry: string): Promise<AIInsights> 
   return JSON.parse(cleanedText) as AIInsights;
 };
 
-// ============================================================
-// COVER LETTER FUNCTIONS
-// ============================================================
 
 interface GenerateCoverLetterData {
   jobTitle: string;
@@ -94,9 +78,6 @@ interface GenerateCoverLetterData {
   userBio?: string;
 }
 
-/**
- * Generate a professional cover letter
- */
 export const generateCoverLetter = async (data: GenerateCoverLetterData): Promise<string> => {
   const prompt = `
     Write a professional cover letter for a ${data.jobTitle} position at ${data.companyName}.
@@ -125,13 +106,7 @@ export const generateCoverLetter = async (data: GenerateCoverLetterData): Promis
   return generateWithFallback(prompt);
 };
 
-// ============================================================
-// RESUME FUNCTIONS
-// ============================================================
 
-/**
- * Improve resume content with AI
- */
 export const improveWithAI = async (
   current: string,
   type: string,
@@ -156,9 +131,6 @@ export const improveWithAI = async (
   return generateWithFallback(prompt);
 };
 
-// ============================================================
-// QUIZ FUNCTIONS
-// ============================================================
 
 interface QuizQuestion {
   question: string;
@@ -167,9 +139,6 @@ interface QuizQuestion {
   explanation: string;
 }
 
-/**
- * Generate quiz questions for a user based on their industry and skills
- */
 export const generateQuizQuestions = async (
   industry: string,
   skills: string[] = []
@@ -198,9 +167,6 @@ export const generateQuizQuestions = async (
   return quiz.questions;
 };
 
-/**
- * Generate improvement tip based on wrong answers
- */
 export const generateImprovementTip = async (
   wrongAnswers: Array<{
     question: string;
@@ -227,9 +193,6 @@ export const generateImprovementTip = async (
   return generateWithFallback(prompt);
 };
 
-// ============================================================
-// EXPORT ALL FUNCTIONS
-// ============================================================
 
 export default {
   generateAIInsights,

@@ -1,4 +1,3 @@
-// app/api/cover-letter/generate/route.ts
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/databaseConnection";
 import { getAuthUser } from "@/lib/auth";
@@ -11,19 +10,16 @@ export async function POST(request: NextRequest) {
   try {
     await connectDB();
 
-    // Check authentication
     const authUser = await getAuthUser();
     if (!authUser) {
       return response(false, 401, "Unauthorized");
     }
 
-    // Get user
     const user = await UserModel.findById(authUser._id);
     if (!user) {
       return response(false, 404, "User not found");
     }
 
-    // Get request body
     const body = await request.json();
     const { jobTitle, companyName, jobDescription } = body;
 
@@ -31,7 +27,6 @@ export async function POST(request: NextRequest) {
       return response(false, 400, "Job title, company name, and job description are required");
     }
 
-    // Generate cover letter using Gemini
     const content = await generateCoverLetterAI({
       jobTitle,
       companyName,
@@ -42,7 +37,6 @@ export async function POST(request: NextRequest) {
       userBio: user.bio || "",
     });
 
-    // Save to database
     const coverLetter = await CoverLetter.create({
       userId: user._id.toString(),
       content,
