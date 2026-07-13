@@ -31,8 +31,12 @@ export default function InterviewPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+        <div className="text-center space-y-1">
+          <p className="text-lg font-medium">Loading your Interview Data</p>
+          <p className="text-sm text-muted-foreground">Fetching your quiz history...</p>
+        </div>
       </div>
     );
   }

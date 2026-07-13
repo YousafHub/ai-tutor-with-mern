@@ -29,7 +29,7 @@ export default function EditCoverLetterPage({
 
 
   const { data, loading, error } = useFetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/cover-letter/${id}`,
+    `/api/cover-letter/${id}`,
     {
       method: "GET",
     }
