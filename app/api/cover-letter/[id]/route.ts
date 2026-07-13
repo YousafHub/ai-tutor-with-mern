@@ -1,9 +1,11 @@
+import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/databaseConnection";
 import { getAuthUser } from "@/lib/auth";
 import { response, catchError } from "@/lib/helperfunction";
 import { CoverLetter } from "@/models/CoverLetter";
 
 export async function GET(
+  request: NextRequest, 
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -32,7 +34,8 @@ export async function GET(
 }
 
 export async function DELETE(
-  { params }: { params: Promise<{ id: string }> } 
+  request: NextRequest, 
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
