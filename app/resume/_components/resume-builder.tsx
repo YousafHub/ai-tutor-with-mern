@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Download, Edit, Monitor, Save, AlertTriangle, Loader2 } from "lucide-react";
 import MarkdownEditor from "@uiw/react-markdown-editor";
-import html2pdf from "html2pdf.js";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -136,6 +135,9 @@ export default function ResumeBuilder({ initialContent, user }: ResumeBuilderPro
     };
 
     const generatePDF = async () => {
+
+        const html2pdf = (await import('html2pdf.js')).default;
+
         setIsGenerating(true);
         try {
             const element = document.getElementById("resume-pdf");
